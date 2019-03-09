@@ -32,7 +32,7 @@ public class TwitterDriver {
             System.out.println("Please enter a Twitter handle, do no include the '@' symbol (or 'done' to quit.)");
             twitter_handle = scan.next();
         }
-bigBird.saQuery("American");
+bigBird.saQuery("America");
 
     }
 }
