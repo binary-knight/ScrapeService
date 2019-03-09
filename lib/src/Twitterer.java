@@ -65,7 +65,7 @@ public void saQuery (String searchTerm)
 {
     Query query = new Query(searchTerm);
     query.setCount(100);
-    query.setGeoCode(new GeoLocation(34.8021, 38.9968), 500, Query.MILES);
+    query.setGeoCode(new GeoLocation(0, 0), 500, Query.MILES);
     query.setSince("2019-03-01");
 
     try {
