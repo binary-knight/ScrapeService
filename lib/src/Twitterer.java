@@ -7,6 +7,7 @@ import twitter4j.Twitter;
 import twitter4j.TwitterFactory;
 import twitter4j.TwitterException;
 
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.PrintStream;
 
@@ -20,7 +21,7 @@ public class Twitterer {
     private List<Status> statuses;
     private double latitude;
     private double longitude;
-    private int miles;
+    private int radius;
     private String timeFrame;
     private String searchQuery;
 
@@ -60,8 +61,8 @@ public class Twitterer {
     public void saQuery(String searchTerm) {
         Query query = new Query(searchTerm);
         query.setCount(100);
-        query.setGeoCode(new GeoLocation(getLatitude(), getLongitude()),getMiles(), Query.MILES);
-        query.setSince(getTimeFrame());
+        query.setGeoCode(new GeoLocation(latitude, longitude),radius, Query.MILES);
+        query.setSince(timeFrame);
 
         try {
             QueryResult result = twitter.search(query);
@@ -70,7 +71,7 @@ public class Twitterer {
             for (Status tweet : result.getTweets()) {
                 counter++;
                 System.out.println("Tweet #" + counter + ": @" + tweet.getUser().getName() +
-                        "tweeted \"" + tweet.getText() + "\"");
+                        " tweeted \"" + tweet.getText() + "\"");
             }
         } catch (TwitterException e) {
             e.printStackTrace();
@@ -78,46 +79,23 @@ public class Twitterer {
         System.out.println();
     }
 
-    public void setLatitude(double latIn) {
-        latitude = latIn;
+    public void setParameters(double latIn, double longIn, int radIn, String timeIn,
+                            String searchIn) {
+             latitude = latIn;
+            longitude = longIn;
+            radius = radIn;
+            timeFrame = timeIn;
+            searchQuery = searchIn;
+            System.out.println("Thank you.  Searching the following parameters: \n" +
+                    "Latitude: " + latitude + "\n"
+            + "Longitude: " + longitude + "\n"
+            + "Radius: " + radius + " miles\n"
+            + "Starting from " + timeFrame + " until today.\n");
+            saQuery(searchQuery);
+        }
     }
 
-    public double getLatitude() {
-        return latitude;
-    }
 
-    public void setLongitude(double longIn) {
-        longitude = longIn;
-    }
-
-    public double getLongitude() {
-        return longitude;
-    }
-
-    public void setMiles(int milesIn) {
-        miles = milesIn;
-    }
-
-    public int getMiles() {
-        return miles;
-    }
-
-    public void setTimeFrame(String timeIn) {
-        timeFrame = timeIn;
-    }
-
-    public String getTimeFrame() {
-        return timeFrame;
-    }
-
-    public void setSearchQuery(String searchIn) {
-        searchQuery = searchIn;
-    }
-
-    public String getSearchQuery() {
-        return searchQuery;
-    }
-}
 
 
 
