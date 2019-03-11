@@ -1,3 +1,6 @@
 
 lib/.idea/workspace.xml
 lib/twitter4j.properties
+lib/gmaps_api_key1
+*.properties
+lib/twitter4j.properties

@@ -1,16 +1,17 @@
-import twitter4j.GeoLocation;
-import twitter4j.Paging;
-import twitter4j.Query;
-import twitter4j.QueryResult;
-import twitter4j.Status;
-import twitter4j.Twitter;
-import twitter4j.TwitterFactory;
-import twitter4j.TwitterException;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+import com.google.maps.GeoApiContext;
+import com.google.maps.GeocodingApi;
+import com.google.maps.errors.ApiException;
+import com.google.maps.model.GeocodingResult;
+import twitter4j.*;
 
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.PrintStream;
+import java.io.File;
+import java.util.Arrays;
+import java.util.Scanner;
 
+
+import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -24,6 +25,7 @@ public class Twitterer {
     private int radius;
     private String timeFrame;
     private String searchQuery;
+
 
 
     public Twitterer(PrintStream console) {
@@ -61,7 +63,7 @@ public class Twitterer {
     public void saQuery(String searchTerm) {
         Query query = new Query(searchTerm);
         query.setCount(100);
-        query.setGeoCode(new GeoLocation(latitude, longitude),radius, Query.MILES);
+        query.setGeoCode(new GeoLocation(latitude, longitude), radius, Query.MILES);
         query.setSince(timeFrame);
 
         try {
@@ -93,4 +95,31 @@ public class Twitterer {
                 + "Starting from " + timeFrame + " until today.\n");
         saQuery(searchQuery);
     }
+
+    /** I'm attempting to add gelocation here, so that a user could input "Austin, Texas"
+     * instead of having to look up coordinates for a search query.
+     *
+     * I still need to parse and read the output to store in variables so that it automatically inputs
+     * into arguments found in setParameters().
+     *
+     * @param address is address, which can be as generic as possible, that the target location should be.
+     * @throws InterruptedException
+     * @throws ApiException
+     * @throws IOException
+     */
+
+ public void geoCode(String address) throws InterruptedException, ApiException, IOException {
+     File file = new File("gmaps_api_key1"); // Add your google API key to a file and path to it.
+     Scanner sc = new Scanner(file);
+     GeoApiContext context = new GeoApiContext.Builder()
+             .apiKey(sc.nextLine())
+             .build();
+     GeocodingResult[] results = GeocodingApi.geocode(context, address).await();
+     Gson gson = new GsonBuilder().setPrettyPrinting().create();
+     //System.out.println(gson.toJson(results[0].geometry));
+     List<String> list = new ArrayList<String>();
+     list.add("" + (results[0].geometry));
+     System.out.println(Arrays.toString(list.toArray()));
+ }
+
 }
