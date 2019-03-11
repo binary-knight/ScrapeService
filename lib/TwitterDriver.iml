@@ -7,6 +7,9 @@
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
-    <orderEntry type="library" name="twitter4j-core-4.0.7" level="project" />
+    <orderEntry type="library" exported="" name="twitter4j-core-4.0.7" level="project" />
+    <orderEntry type="library" exported="" name="log4j-1.2.15" level="project" />
+    <orderEntry type="library" exported="" name="json-simple-1.1.1" level="project" />
+    <orderEntry type="library" name="com.google.maps:google-maps-services:0.9.2" level="project" />
   </component>
 </module>

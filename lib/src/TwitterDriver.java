@@ -61,5 +61,5 @@ public class TwitterDriver {
         String userSearchTerm = scan.next();
         bigBird.setParameters(userLat, userLong, userRadius, userTimeFrame, userSearchTerm);
 
-            }
+    }
 }

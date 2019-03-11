@@ -80,22 +80,17 @@ public class Twitterer {
     }
 
     public void setParameters(double latIn, double longIn, int radIn, String timeIn,
-                            String searchIn) {
-             latitude = latIn;
-            longitude = longIn;
-            radius = radIn;
-            timeFrame = timeIn;
-            searchQuery = searchIn;
-            System.out.println("Thank you.  Searching the following parameters: \n" +
-                    "Latitude: " + latitude + "\n"
-            + "Longitude: " + longitude + "\n"
-            + "Radius: " + radius + " miles\n"
-            + "Starting from " + timeFrame + " until today.\n");
-            saQuery(searchQuery);
-        }
+                              String searchIn) {
+        latitude = latIn;
+        longitude = longIn;
+        radius = radIn;
+        timeFrame = timeIn;
+        searchQuery = searchIn;
+        System.out.println("Thank you.  Searching the following parameters: \n" +
+                "Latitude: " + latitude + "\n"
+                + "Longitude: " + longitude + "\n"
+                + "Radius: " + radius + " miles\n"
+                + "Starting from " + timeFrame + " until today.\n");
+        saQuery(searchQuery);
     }
-
-
-
-
-
+}
