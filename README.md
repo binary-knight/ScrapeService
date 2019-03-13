@@ -1,4 +1,4 @@
-# TwitterBot
+# ScrapeService
 
 Original idea by Ria Galanos, whose documentation and source can be found at
 https://github.com/ritagalanos/cs1-twitter
