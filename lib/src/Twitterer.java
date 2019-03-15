@@ -20,11 +20,12 @@ public class Twitterer {
     private Twitter twitter;
     private PrintStream consolePrint;
     private List<Status> statuses;
-    private double latitude;
-    private double longitude;
-    private int radius;
+        private int radius;
     private String timeFrame;
     private String searchQuery;
+    double lat;
+    double lng;
+
 
 
 
@@ -63,7 +64,7 @@ public class Twitterer {
     public void saQuery(String searchTerm) {
         Query query = new Query(searchTerm);
         query.setCount(100);
-        query.setGeoCode(new GeoLocation(latitude, longitude), radius, Query.MILES);
+        query.setGeoCode(new GeoLocation(lat, lng), radius, Query.MILES);
         query.setSince(timeFrame);
 
         try {
@@ -81,16 +82,16 @@ public class Twitterer {
         System.out.println();
     }
 
-    public void setParameters(double latIn, double longIn, int radIn, String timeIn,
-                              String searchIn) {
-        latitude = latIn;
-        longitude = longIn;
+    public void setParameters(String location, int radIn, String timeIn,
+                              String searchIn) throws InterruptedException,
+                                ApiException, IOException {
+
+        this.geoCode(location);
         radius = radIn;
         timeFrame = timeIn;
         searchQuery = searchIn;
-        System.out.println("Thank you.  Searching the following parameters: \n" +
-                "Latitude: " + latitude + "\n"
-                + "Longitude: " + longitude + "\n"
+        System.out.println("Thank you.  Searching the following parameters: \n"
+                + "Search Location: " + location + "\n"
                 + "Radius: " + radius + " miles\n"
                 + "Starting from " + timeFrame + " until today.\n");
         saQuery(searchQuery);
@@ -115,11 +116,21 @@ public class Twitterer {
              .apiKey(sc.nextLine())
              .build();
      GeocodingResult[] results = GeocodingApi.geocode(context, address).await();
-     Gson gson = new GsonBuilder().setPrettyPrinting().create();
-     //System.out.println(gson.toJson(results[0].geometry));
-     List<String> list = new ArrayList<String>();
-     list.add("" + (results[0].geometry));
-     System.out.println(Arrays.toString(list.toArray()));
+     //Gson gson = new GsonBuilder().setPrettyPrinting().create();
+
+     List<String> list = new ArrayList<>();
+     list.add("" + (results[0].geometry.location));
+     String coords = Arrays.toString(list.toArray());
+     var lat2double = coords.substring(1, 8);
+     var lat = Double.parseDouble(lat2double);
+     var lng2double = coords.substring(13, 21);
+     var lng = Double.parseDouble(lng2double);
+     System.out.println(lat);
+     System.out.println(lng);
+
+
+
+
  }
 
 }

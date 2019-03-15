@@ -36,35 +36,30 @@ public class TwitterDriver {
 ////            twitter_handle = scan.next();
 ////        }
 //
-//        Scanner scan = new Scanner(System.in);
-//        System.out.print("Please enter a latitude: ");
-//        double userLat = Double.parseDouble(scan.next());
-//        if ((userLat < -90) || (userLat > 90))
-//        {
-//            System.out.println("Error:  Invalid Latitude. Try again.");
-//            return;
-//        }
-//        System.out.print("Please enter a longitude: ");
-//        double userLong = Double.parseDouble((scan.next()));
-//        if ((userLong < -180) || (userLong > 180))
-//        {
-//            System.out.println("Error: Invalid Longitude.  Try again.");
-//            return;
-//        }
-//        System.out.print("Please enter a radius (in miles): ");
-//        int userRadius = Integer.parseInt(scan.next());
-//        if (userRadius > 1000)
-//        {
-//            System.out.println("Search radius must be less than 1000 miles.  Try again.");
-//            return;
-//        }
-//        System.out.println("Please enter the starting date to search (YYYY-MM-DD)");
-//        String userTimeFrame = scan.next();
-//        System.out.println("Please enter the search term: ");
-//        String userSearchTerm = scan.next();
-//        bigBird.setParameters(userLat, userLong, userRadius, userTimeFrame, userSearchTerm);
-bigBird.geoCode("Austin, TX");
+        Scanner scan = new Scanner(System.in);
+        System.out.print("Please enter a city and state or country: ");
+        String userLoc = scan.next();
 
+        try {
+            bigBird.geoCode(scan.next());
+        }
+        catch (ArrayIndexOutOfBoundsException e) {
+            System.out.println("Invalid location name.  Please enter a valid city and state/country.");
+            return;
+        }
+
+        System.out.print("Please enter a radius (in miles): ");
+        int userRadius = Integer.parseInt(scan.next());
+        if (userRadius > 1000)
+        {
+            System.out.println("Search radius must be less than 1000 miles.  Try again.");
+            return;
+        }
+        System.out.println("Please enter the starting date to search (YYYY-MM-DD)");
+        String userTimeFrame = scan.next();
+        System.out.println("Please enter the search term: ");
+        String userSearchTerm = scan.next();
+        bigBird.setParameters(userLoc, userRadius, userTimeFrame, userSearchTerm);
 
     }
 }
