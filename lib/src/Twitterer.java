@@ -1,5 +1,3 @@
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
 import com.google.maps.GeoApiContext;
 import com.google.maps.GeocodingApi;
 import com.google.maps.errors.ApiException;
@@ -20,13 +18,11 @@ public class Twitterer {
     private Twitter twitter;
     private PrintStream consolePrint;
     private List<Status> statuses;
-        private int radius;
+    private int radius;
     private String timeFrame;
     private String searchQuery;
-    double lat;
-    double lng;
-
-
+    private double lat;
+    private double lng;
 
 
     public Twitterer(PrintStream console) {
@@ -84,24 +80,20 @@ public class Twitterer {
 
     public void setParameters(String location, int radIn, String timeIn,
                               String searchIn) throws InterruptedException,
-                                ApiException, IOException {
+            ApiException, IOException {
 
         this.geoCode(location);
         radius = radIn;
         timeFrame = timeIn;
         searchQuery = searchIn;
-        System.out.println("Thank you.  Searching the following parameters: \n"
-                + "Search Location: " + location + "\n"
-                + "Radius: " + radius + " miles\n"
-                + "Starting from " + timeFrame + " until today.\n");
+        System.out.printf("Thank you.  Displaying results for the following parameters: " +
+                "\nSearch Location: %s\nRadius: " +
+                "%d miles\nStarting from %s until today.\n%n", location, radius, timeFrame);
         saQuery(searchQuery);
     }
 
-    /** I'm attempting to add gelocation here, so that a user could input "Austin, Texas"
-     * instead of having to look up coordinates for a search query.
-     *
-     * I still need to parse and read the output to store in variables so that it automatically inputs
-     * into arguments found in setParameters().
+    /**
+     * Geolocation based upon place name.
      *
      * @param address is address, which can be as generic as possible, that the target location should be.
      * @throws InterruptedException
@@ -109,28 +101,22 @@ public class Twitterer {
      * @throws IOException
      */
 
- public void geoCode(String address) throws InterruptedException, ApiException, IOException {
-     File file = new File("gmaps_api_key1"); // Add your google API key to a file and path to it.
-     Scanner sc = new Scanner(file);
-     GeoApiContext context = new GeoApiContext.Builder()
-             .apiKey(sc.nextLine())
-             .build();
-     GeocodingResult[] results = GeocodingApi.geocode(context, address).await();
-     //Gson gson = new GsonBuilder().setPrettyPrinting().create();
-
-     List<String> list = new ArrayList<>();
-     list.add("" + (results[0].geometry.location));
-     String coords = Arrays.toString(list.toArray());
-     var lat2double = coords.substring(1, 8);
-     var lat = Double.parseDouble(lat2double);
-     var lng2double = coords.substring(13, 21);
-     var lng = Double.parseDouble(lng2double);
-     System.out.println(lat);
-     System.out.println(lng);
+    public void geoCode(String address) throws InterruptedException, ApiException, IOException {
+        File file = new File("gmaps_api_key1"); // Add your google API key to a file and path to it.
+        Scanner sc = new Scanner(file);
+        GeoApiContext context = new GeoApiContext.Builder()
+                .apiKey(sc.nextLine())
+                .build();
+        GeocodingResult[] results = GeocodingApi.geocode(context, address).await();
+        List<String> list = new ArrayList<>();
+        list.add("" + (results[0].geometry.location));
+        String coords = Arrays.toString(list.toArray());
+        var lat2double = coords.substring(1, 8);
+        lat = Double.parseDouble(lat2double);
+        var lng2double = coords.substring(13, 21);
+        lng = Double.parseDouble(lng2double);
 
 
-
-
- }
+    }
 
 }
