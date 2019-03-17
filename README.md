@@ -1,7 +1,7 @@
 # ScrapeService
 
 Original idea by Ria Galanos, whose documentation and source can be found at
-https://github.com/ritagalanos/cs1-twitter
+https://github.com/riagalanos/cs1-twitter
 
 
 Currently, you will need to create a twitter developer account (developers.twitter.com) and get that application approved.  
